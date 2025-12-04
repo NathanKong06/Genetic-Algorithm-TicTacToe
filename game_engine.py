@@ -16,16 +16,16 @@ class TicTacToeBoard:
         pos (int): position from 0 to 8
         Returns True if move was made, False otherwise.
         """
-        if self.board[pos] == self.EMPTY and 0 <= pos < 9:
+        if 0 <= pos < 9 and self.board[pos] == self.EMPTY:
             self.board[pos] = player
             return True
         return False
     
-    def get_valid_moves(self) -> list[tuple[int, int]]:
+    def get_valid_moves(self) -> list[int]:
         """
         Returns a list of valid moves (empty cells) on the board.
         """
-        return [i for i, symbol in enumerate (self.board) if symbol == self.EMPTY]
+        return [i for i, symbol in enumerate(self.board) if symbol == self.EMPTY]
     
     def check_win(self) -> str | None:
         """
@@ -39,10 +39,10 @@ class TicTacToeBoard:
             [0, 4, 8], [2, 4, 6]              # diagonals
         ]
         for i, j, k in winning_combinations:
-            sum = self.board[i] + self.board[j] + self.board[k]
-            if sum == 3:
+            cur_sum = self.board[i] + self.board[j] + self.board[k]
+            if cur_sum == 3:
                 return self.X
-            elif sum == -3:
+            elif cur_sum == -3:
                 return self.O
         return None
 
@@ -74,7 +74,7 @@ def simulate_game(player1, player2) -> int | None:
 
     while board.check_win() == None and not board.is_full():
         move_pos = current_player.get_move(board,current_symbol)
-        if move_pos not in board.get_valid_moves():
+        if move_pos not in board.get_valid_moves(): #Illegal Move
             return -current_symbol
         board.make_move(move_pos, current_symbol)
         if current_symbol == board.X:
