@@ -68,7 +68,7 @@ def simulate_game(player1, player2) -> int | None:
     current_symbol = board.X  # Player1 uses X (1)
 
     while board.check_win() == None and not board.is_full(): # Continue until a win or board is full (draw)
-        move_pos = current_player.get_move(board,current_symbol) # Get move from current player
+        move_pos = current_player.get_move(board) # Get move from current player
         if move_pos not in board.get_valid_moves(): # Check if move is valid
             return -current_symbol  # Penalize illegal move by returning opponent's win
         board.make_move(move_pos, current_symbol)  
